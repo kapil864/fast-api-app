@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from typing import Annotated
-from pydantic import BaseModel, EmailStr, Field, UUID1
+from pydantic import BaseModel, EmailStr, Field
 
 class BlogBase(BaseModel):
     pass
@@ -15,10 +15,10 @@ class CommentsBase(BaseModel):
     pass
 
 class Blog(BlogBase):
-    id: UUID1
+    id: int
     timestamp: datetime = Field(default=datetime.now())
-    category_id: UUID1
-    author_id: UUID1
+    category_id: int
+    author_id: int
     title: str
     subheading: str
     content: str
@@ -27,24 +27,31 @@ class Blog(BlogBase):
         orm_mode = True
 
 class Author(AuthorBase):
-    id: UUID1
     username : str
     first_name: str
     last_name: str
     email: EmailStr
-    password : str
+    
+    class Config:
+        orm_mode = True
+
+class AuthorPublic(Author):
+    id: int
     blogs: list[Blog]
 
-class AuthorInDB(Author):
+class AuthorCreate(Author):
     password: str
 
 class Comment(CommentsBase):
     timestamp: date
-    author_id: UUID1
+    author_id: int
     content: str
-    blog_id: UUID1
+    blog_id: int
 
 class Category(CategoryBase):
     category: str
     related_category: list[CategoryBase|None]
+
+    class Config:
+        orm_mode = True
 

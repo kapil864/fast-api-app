@@ -1,17 +1,17 @@
-from fastapi import APIRouter, Response, status
-
+from fastapi import APIRouter, Response, status, Depends
+from sqlalchemy.orm import session
 
 from ..schemas import Blog
+from ..dependencies import get_db_session
 
 router = APIRouter()
 
-blogs_list = []
 
 @router.post('/')
-async def add_blogs(blog: Blog):
-    blogs_list.append(blog)
+async def add_blogs(blog: Blog,db: session = Depends(get_db_session)):
     return Response(content="Blog created", status_code=status.HTTP_201_CREATED)
 
-@router.get('/', response_model=list[Blog])
+@router.get('/')
 async def get_blogs():
-    return blogs_list
+    return "hi"
+
