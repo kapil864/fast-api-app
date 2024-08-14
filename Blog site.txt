@@ -1,0 +1,83 @@
+Blog--------------
+	Elements -----
+		Author
+		Blog
+		Comments
+		Visitor
+		Category
+
+	Author -------
+		Username
+		Name
+		Email-address: verfication
+		Blogs
+		Comment
+		
+		Additional:
+			Recent blogs
+			Most liked blogs
+
+	Category --------
+		category
+		Related category	
+
+	Blog ----------- 
+		Timestamp
+		Category
+		Author
+		Title
+		Subheading (Optional)
+		Content
+		Comments
+
+		Addiional:
+			Likes
+			Views
+			Related blogs
+			
+	Comments ------------
+		Timestamp
+		Author
+		Comment
+
+	Visitor-----------------------------
+		(Only view)
+		
+		
+
+Capailities:
+	
+	Author ------------   (login required)
+		- create author
+		- delete author
+		- edit email (profile)
+		- list blogs by author
+		- show commented blogs
+		
+		Additional:
+			- show liked blogs
+		
+	Blog -----------------
+		- create blog  (login required)
+		- delete blog  (login required)
+		- list all blogs
+		- list all category
+		
+	Comments-----------------
+		- comment on blog (login required)
+		
+		Additional:
+			- edit comment on blog
+	
+	Category --------------
+		- list all category
+		- number of blogs in each category
+		- list blogs in category
+	
+	Visitor ---------------
+		- can view blogs
+		- create account/author
+		- login
+		- logout
+
+Comments are being grayed out for now.
