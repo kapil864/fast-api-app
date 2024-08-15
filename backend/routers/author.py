@@ -19,7 +19,7 @@ async def get_author(response: Response, db: Session = Depends(get_db_session), 
     return JSONResponse(status_code=404, content="Not found")
 
 
-@router.post('/me', response_model=AuthorPublic)
+@router.post('/register', response_model=AuthorPublic)
 async def create_author(response: Response, author: AuthorCreate, db: Session = Depends(get_db_session)):
     author_db = get_author_by_username(db, author.username)
     if author_db:
