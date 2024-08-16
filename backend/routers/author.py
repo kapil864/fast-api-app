@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 from ..schemas import Author, AuthorCreate, AuthorPublic
 from ..dependencies import get_db_session
-from .utils import get_author_by_username, create_author as create_db_author
+from .utils import get_author_by_username, create_author as create_db_author, get_all_authors_db
 
 router = APIRouter()
 
@@ -26,3 +26,8 @@ async def create_author(response: Response, author: AuthorCreate, db: Session = 
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={"message": "Author already exists."})
     author = create_db_author(db,author)
     return author
+
+@router.get('/all', response_model=list[AuthorPublic])
+async def get_all_authors(response: Response, db: Session = Depends(get_db_session)):
+    authors = get_all_authors_db(db)
+    return authors

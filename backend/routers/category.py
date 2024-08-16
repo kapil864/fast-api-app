@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 from ..dependencies import get_db_session
 from ..models import Category
-from ..schemas import Category as sCategory
+from ..schemas import Category as sCategory, CategoryPublic
 from .utils import get_all_categories_db, get_category_db, create_category_db
 
 router = APIRouter()
@@ -16,7 +16,7 @@ async def get_all_categories(response: Response, db: Session = Depends(get_db_se
         return categories
     return JSONResponse(content={'message':'No categories exist, create one'}, status_code=200)
 
-@router.get('/')
+@router.get('/', response_model=CategoryPublic)
 async def get_category(category: str = None, db: Session = Depends(get_db_session)):
     category = get_category_db(db, category)
     if category is not None:

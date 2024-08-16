@@ -19,7 +19,7 @@ class Blog(Base):
     subheading = Column(String, nullable= True)
     content = Column(String, nullable=False)
     author_id = Column(Integer, ForeignKey('authors.id'))
-    categories = relationship('Category',secondary='blog_category_association', back_populates='blogs')
+    categories = relationship('Category',secondary=blog_category_association, back_populates='blogs')
 
 class Author(Base):
 
@@ -39,4 +39,4 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False, unique= True)
-    blogs = relationship('Blog',secondary='blog_category_association', back_populates='categories')
+    blogs = relationship('Blog',secondary=blog_category_association, back_populates='categories')

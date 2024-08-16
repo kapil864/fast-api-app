@@ -1,19 +1,20 @@
 from fastapi import APIRouter, Response, status, Depends
 from sqlalchemy.orm import Session
 
-from ..schemas import Blog
+from ..schemas import BlogCreate, BlogPublic
 from ..dependencies import get_db_session
-from .utils import create_db_blog
+from .utils import create_db_blog, get_all_blogs_db
 
 router = APIRouter()
 
 
-@router.post('/')
-async def add_blogs(response: Response, blog: Blog,db: Session = Depends(get_db_session)):
+@router.post('/', response_model=BlogPublic)
+async def add_blogs(response: Response, blog: BlogCreate, db: Session = Depends(get_db_session)):
     blog = create_db_blog(db, blog)
-    return Response(content="Blog created", status_code=status.HTTP_201_CREATED)
+    response.status_code = status.HTTP_201_CREATED
+    return blog
 
-@router.get('/')
-async def get_blogs():
-    return "hi"
 
+@router.get('/', response_model=list[BlogPublic])
+async def get_blogs(db: Session = Depends(get_db_session)):
+    return get_all_blogs_db(db)

@@ -20,7 +20,6 @@ class CommentsBase(BaseModel):
 
 
 class Blog(BlogBase):
-    categories: list[CategoryBase]
     author_id: int
     title: str
     subheading: str
@@ -31,12 +30,13 @@ class Blog(BlogBase):
 
 
 class BlogCreate(Blog):
-    pass
+    categories: list[int]
 
 
 class BlogPublic(Blog):
     id: int
     timestamp: datetime
+    categories: list['Category']
 
 
 class Author(AuthorBase):
@@ -58,24 +58,20 @@ class AuthorCreate(Author):
     password: str
 
 
-class Comment(CommentsBase):
-    timestamp: date
-    author_id: int
-    content: str
-    blog_id: int
-
-
 class Category(CategoryBase):
+    id: int = None
     name: str
 
     class Config:
         orm_mode = True
 
 
-class CategoryCreate(Category):
-    pass
-
-
 class CategoryPublic(Category):
-    id: int
-    related_category: list[CategoryBase]
+    blogs: list[BlogPublic]
+
+
+class Comment(CommentsBase):
+    timestamp: date
+    author_id: int
+    content: str
+    blog_id: int
