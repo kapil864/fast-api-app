@@ -9,6 +9,7 @@ blog_category_association = Table(
     Column('category_id', ForeignKey('categories.id'), primary_key=True),
 )
 
+
 class Blog(Base):
 
     __tablename__ = 'blogs'
@@ -16,10 +17,12 @@ class Blog(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     timestamp = Column(DateTime)
     title = Column(String, nullable=False)
-    subheading = Column(String, nullable= True)
+    subheading = Column(String, nullable=True)
     content = Column(String, nullable=False)
     author_id = Column(Integer, ForeignKey('authors.id'))
-    categories = relationship('Category',secondary=blog_category_association, back_populates='blogs')
+    categories = relationship(
+        'Category', secondary=blog_category_association, back_populates='blogs')
+
 
 class Author(Base):
 
@@ -33,10 +36,12 @@ class Author(Base):
     password = Column(String, nullable=False)
     blogs = relationship('Blog')
 
+
 class Category(Base):
 
     __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False, unique= True)
-    blogs = relationship('Blog',secondary=blog_category_association, back_populates='categories')
+    name = Column(String, nullable=False, unique=True)
+    blogs = relationship(
+        'Blog', secondary=blog_category_association, back_populates='categories')

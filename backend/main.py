@@ -12,7 +12,7 @@ app = FastAPI(title='Vblog APIs')
 models.Base.metadata.create_all(bind=engine)
 
 
-
 app.include_router(prefix='/blog', router=blog_router, tags=['Blog'])
 app.include_router(prefix='/author', router=author_router, tags=['Author'])
-app.include_router(prefix='/category', router=category_router, tags=['Category'])
+app.include_router(prefix='/category',
+                   router=category_router, tags=['Category'])

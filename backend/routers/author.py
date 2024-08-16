@@ -24,8 +24,9 @@ async def create_author(response: Response, author: AuthorCreate, db: Session = 
     author_db = get_author_by_username(db, author.username)
     if author_db:
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={"message": "Author already exists."})
-    author = create_db_author(db,author)
+    author = create_db_author(db, author)
     return author
+
 
 @router.get('/all', response_model=list[AuthorPublic])
 async def get_all_authors(response: Response, db: Session = Depends(get_db_session)):
