@@ -59,14 +59,16 @@ class AuthorCreate(Author):
 
 
 class Category(CategoryBase):
-    id: int = None
     name: str
 
     class Config:
         orm_mode = True
 
-
 class CategoryPublic(Category):
+    id: int
+
+
+class CategoryPublicBlogs(Category):
     blogs: list[BlogPublic]
 
 

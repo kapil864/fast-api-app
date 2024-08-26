@@ -10,7 +10,7 @@ from .utils import get_all_categories_db, get_category_db, create_category_db
 router = APIRouter()
 
 
-@router.get('/all')
+@router.get('/all', response_model=list[CategoryPublic])
 async def get_all_categories(response: Response, db: Session = Depends(get_db_session)):
     categories = get_all_categories_db(db)
     if len(categories) != 0:
@@ -26,7 +26,7 @@ async def get_category(category: str = None, db: Session = Depends(get_db_sessio
     return JSONResponse(status_code=404, content={'message': 'Category does not exist'})
 
 
-@router.post('/')
+@router.post('/', response_model=CategoryPublic)
 async def create_category(category: sCategory, db: Session = Depends(get_db_session)):
     category = create_category_db(db, category)
     if category is not None:
