@@ -43,8 +43,27 @@ def create_access_token(payload: dict, expire_delta: timedelta | None = None):
     return jwt.encode(to_encode, SECRECT_KEY, ALGORITHIM)
 
 
+async def verify_token(db: Annotated[Session, Depends(get_db_session)], token: Annotated[str, Depends(oauth2_Scheme)]):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    payload = jwt.decode(token, SECRECT_KEY, algorithms=[ALGORITHIM])
+    try:
+        username: str = payload.get('sub')
+        if username is None:
+            raise credentials_exception
+    except jwt.InvalidTokenError:
+        raise credentials_exception
+    author = get_author_by_username(db, username)
+    if author is None:
+        raise credentials_exception
+    return True
+
+
 @router.post('/token')
-async def login( form_data : Annotated[OAuth2PasswordRequestForm, Depends()], db : Annotated[Session, Depends(get_db_session)]):
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Annotated[Session, Depends(get_db_session)]):
     username: str = form_data.username
     if authenticate_author(db, username, form_data.password):
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
