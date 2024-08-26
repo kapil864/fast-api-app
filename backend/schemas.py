@@ -45,13 +45,13 @@ class Author(AuthorBase):
     last_name: str
     email: EmailStr
 
-    class Config:
-        orm_mode = True
-
 
 class AuthorPublic(Author):
     id: int
     blogs: list[Blog]
+
+    class Config:
+        orm_mode = True
 
 
 class AuthorCreate(Author):
@@ -75,3 +75,8 @@ class Comment(CommentsBase):
     author_id: int
     content: str
     blog_id: int
+
+
+class Token(BaseModel):
+    token: str
+    type: str

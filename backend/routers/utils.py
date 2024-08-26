@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from .. import models, schemas
-from ..utils import encrypt_password
+from ..security.utils import encrypt_password
 
 
 def create_author(db: Session, author: schemas.AuthorCreate):
@@ -13,7 +13,7 @@ def create_author(db: Session, author: schemas.AuthorCreate):
         first_name=author.first_name,
         last_name=author.last_name,
         email=author.email,
-        password=hashed_password
+        hashed_password=hashed_password
     )
     db.add(author)
     db.commit()

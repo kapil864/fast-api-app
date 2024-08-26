@@ -33,7 +33,7 @@ class Author(Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
-    password = Column(String, nullable=False)
+    hashed_password = Column(String, nullable=False)
     blogs = relationship('Blog')
 
 
