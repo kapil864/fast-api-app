@@ -43,7 +43,7 @@ def create_access_token(payload: dict, expire_delta: timedelta | None = None):
     return jwt.encode(to_encode, SECRECT_KEY, ALGORITHIM)
 
 
-async def verify_token(db: Annotated[Session, Depends(get_db_session)], token: Annotated[str, Depends(oauth2_Scheme)]):
+async def get_current_user(db: Annotated[Session, Depends(get_db_session)], token: Annotated[str, Depends(oauth2_Scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -59,7 +59,13 @@ async def verify_token(db: Annotated[Session, Depends(get_db_session)], token: A
     author = get_author_by_username(db, username)
     if author is None:
         raise credentials_exception
-    return True
+    return author
+
+
+async def verify_token(author: Annotated[Author, Depends(get_current_user)]):
+    if author:
+        return True
+    return False
 
 
 @router.post('/token')

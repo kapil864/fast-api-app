@@ -20,7 +20,6 @@ class CommentsBase(BaseModel):
 
 
 class Blog(BlogBase):
-    author_id: int
     title: str
     subheading: str
     content: str
@@ -36,6 +35,7 @@ class BlogCreate(Blog):
 class BlogPublic(Blog):
     id: int
     timestamp: datetime
+    author_id: int
     categories: list['Category']
 
 

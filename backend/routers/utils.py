@@ -57,7 +57,7 @@ def create_category_db(db: Session, category: schemas.Category):
     return None
 
 
-def create_db_blog(db: Session, blog: schemas.BlogCreate):
+def create_db_blog(db: Session, blog: schemas.BlogCreate, author_id: int):
     category_models = db.query(models.Category).filter(
         models.Category.id.in_(blog.categories)).all()
 
@@ -65,7 +65,7 @@ def create_db_blog(db: Session, blog: schemas.BlogCreate):
         raise HTTPException(
             status_code=404, detail='One or more categories not found')
 
-    blog = models.Blog(author_id=blog.author_id,
+    blog = models.Blog(author_id=author_id,
                        title=blog.title,
                        subheading=blog.subheading,
                        content=blog.content,
