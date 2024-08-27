@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from typing import Annotated
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class BlogBase(BaseModel):
@@ -20,12 +20,13 @@ class CommentsBase(BaseModel):
 
 
 class Blog(BlogBase):
+
+    model_config = ConfigDict(from_attributes=True)
+
     title: str
     subheading: str
     content: str
 
-    class Config:
-        orm_mode = True
 
 
 class BlogCreate(Blog):
@@ -47,11 +48,11 @@ class Author(AuthorBase):
 
 
 class AuthorPublic(Author):
+
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     blogs: list[Blog]
-
-    class Config:
-        orm_mode = True
 
 
 class AuthorCreate(Author):
@@ -59,10 +60,11 @@ class AuthorCreate(Author):
 
 
 class Category(CategoryBase):
+    
+    model_config = ConfigDict(from_attributes=True)
+
     name: str
 
-    class Config:
-        orm_mode = True
 
 class CategoryPublic(Category):
     id: int

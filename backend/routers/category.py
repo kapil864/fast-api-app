@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
 
 from ..dependencies import get_db_session
-from ..models import Category
+from ..models import Category, Author
 from ..schemas import Category as sCategory, CategoryPublic
 from .utils import get_all_categories_db, get_category_db, create_category_db
+from ..security.auth import get_current_user
 
 router = APIRouter()
 
@@ -27,7 +28,7 @@ async def get_category(category: str = None, db: Session = Depends(get_db_sessio
 
 
 @router.post('/', response_model=CategoryPublic)
-async def create_category(category: sCategory, db: Session = Depends(get_db_session)):
+async def create_category(category: sCategory, db: Session = Depends(get_db_session), author: Author = Depends(get_current_user)):
     category = create_category_db(db, category)
     if category is not None:
         return category
