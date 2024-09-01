@@ -23,6 +23,10 @@ async def create_author(response: Response, author: AuthorCreate, db: Session = 
     author = create_db_author(db, author)
     return author
 
+@router.post('/update-profile-photo')
+async def update_profile_picture(db: Session = Depends(get_db_session), author: Author = Depends(get_current_user), ):
+    pass
+
 
 @router.get('/all', response_model=list[AuthorPublic])
 async def get_all_authors(response: Response, db: Session = Depends(get_db_session), author: Author = Depends(get_current_user)):

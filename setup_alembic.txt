@@ -1,0 +1,3 @@
+alembic init alembic  ==> initialize alembic
+alembic revision --autogenerate -m "Create schema"  ==> create initial schema 
+alembic upgrade <revision id from "Create schema"> ==> apply changes to db
