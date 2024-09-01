@@ -10,7 +10,7 @@ from .database import engine
 
 app = FastAPI(title='Vblog APIs')
 
-models.Base.metadata.create_all(bind=engine)
+# models.Base.metadata.create_all(bind=engine)
 
 
 app.include_router(prefix='/blog', router=blog_router, tags=['Blog'])
