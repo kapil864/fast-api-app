@@ -15,7 +15,7 @@ async def get_author(response: Response, db: Session = Depends(get_db_session), 
     return author
 
 
-@router.post('/register', response_model=AuthorPublic)
+@router.post('/register', response_model=AuthorPublic, status_code= status.HTTP_201_CREATED)
 async def create_author(response: Response, author: AuthorCreate, db: Session = Depends(get_db_session)):
     author_db = get_author_by_username(db, author.username)
     if author_db:
