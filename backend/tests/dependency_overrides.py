@@ -1,6 +1,8 @@
-
+from sqlalchemy.orm import Session
 
 from .database_override import TestingSessionLocal
+from ..models import Author
+from .utils import author
 
 
 def override_get_db_session():
@@ -12,9 +14,6 @@ def override_get_db_session():
 
 
 def override_get_current_user():
-    return {
-        'first_name': 'kapil',
-        'last_username': 'string',
-        'username': 'string',
-        'email': 'string@string.com'
-    }
+    session: Session = TestingSessionLocal()
+    yield session.query(Author).filter(Author.username == author.get('username')).first()
+    session.close()
