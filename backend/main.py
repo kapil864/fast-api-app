@@ -6,15 +6,13 @@ from .routers.author import router as author_router
 from .routers.category import router as category_router
 from .security.auth import router as auth_router
 
-from .models import Base
-from .database import engine
 
 app = FastAPI(title='Vblog APIs')
 
 
 @app.get('/health')
 async def health_check():
-    return JSONResponse(content={'status':'healthy'}, status_code=200)
+    return JSONResponse(content={'status': 'healthy'}, status_code=200)
 
 app.include_router(prefix='/blog', router=blog_router, tags=['Blog'])
 app.include_router(prefix='/author', router=author_router, tags=['Author'])

@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.get('/all', response_model=list[CategoryPublic])
-async def get_all_categories(response: Response, db: Session = Depends(get_db_session)):
+async def get_all_categories( db: Session = Depends(get_db_session)):
     categories = get_all_categories_db(db)
     if len(categories) != 0:
         return categories
