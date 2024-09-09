@@ -10,3 +10,17 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=user
       - POSTGRES_DB=db
+  
+  fast-app:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    image: fast-app:latest
+    container_name: fast-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    env_file:
+      - env
+    

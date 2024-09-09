@@ -1,6 +1,6 @@
 psycopg2-binary
 alembic
-fastapi
+fastapi[standard]
 sqlalchemy
 pyjwt
 passlib

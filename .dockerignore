@@ -1,0 +1,13 @@
+__pycache__/
+sql_app.db
+venv
+postgres
+.pytest_cache
+test_app.db
+.gitignore
+Blog site.txt
+env
+readme.md
+setup_alembic.txt
+docker-compose.yaml
+dockerfile
