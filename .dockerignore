@@ -1,4 +1,7 @@
 __pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
 sql_app.db
 venv
 postgres
@@ -6,7 +9,7 @@ postgres
 test_app.db
 .gitignore
 Blog site.txt
-env
+.env
 readme.md
 setup_alembic.txt
 docker-compose.yaml

@@ -1,3 +1,4 @@
+import os
 import jwt
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
@@ -12,9 +13,9 @@ from ..routers.utils import get_author_by_username
 from .utils import verify_password
 from ..schemas import Token
 
-SECRECT_KEY = '25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b8'
-ALGORITHIM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 5
+SECRECT_KEY = os.getenv('SECRECT_KEY')
+ALGORITHIM = os.getenv('ALGORITHIM')
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
 
 router = APIRouter()
 
