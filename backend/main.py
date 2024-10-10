@@ -9,7 +9,6 @@ from .security.auth import router as auth_router
 
 app = FastAPI(title='Vblog APIs')
 
-
 @app.get('/health')
 async def health_check():
     return JSONResponse(content={'status': 'healthy'}, status_code=200)

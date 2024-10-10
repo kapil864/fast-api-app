@@ -30,4 +30,4 @@ services:
       - SQLALCHEMY_DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
     env_file:
       - .env
-    
+    entrypoint: ["sh", "fast-app-entrypoint.sh"]

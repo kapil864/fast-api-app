@@ -1,5 +1,5 @@
-import os
 import jwt
+from os import getenv
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -13,9 +13,9 @@ from ..routers.utils import get_author_by_username
 from .utils import verify_password
 from ..schemas import Token
 
-SECRECT_KEY = os.getenv('SECRECT_KEY')
-ALGORITHIM = os.getenv('ALGORITHIM')
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
+SECRET_KEY = getenv('SECRET_KEY')
+ALGORITHIM = getenv('ALGORITHIM')
+ACCESS_TOKEN_EXPIRE_MINUTES = int(getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
 
 router = APIRouter()
 
@@ -41,7 +41,7 @@ def create_access_token(payload: dict, expire_delta: timedelta | None = None):
     else:
         expire_time = datetime.now(timezone.utc) + timedelta(seconds=60)
     to_encode.update({'exp': expire_time})
-    return jwt.encode(to_encode, SECRECT_KEY, ALGORITHIM)
+    return jwt.encode(to_encode, SECRET_KEY, ALGORITHIM)
 
 
 async def get_current_user(db: Annotated[Session, Depends(get_db_session)], token: Annotated[str, Depends(oauth2_Scheme)]):
@@ -50,7 +50,7 @@ async def get_current_user(db: Annotated[Session, Depends(get_db_session)], toke
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    payload = jwt.decode(token, SECRECT_KEY, algorithms=[ALGORITHIM])
+    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHIM])
     try:
         username: str = payload.get('sub')
         if username is None:
