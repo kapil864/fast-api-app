@@ -82,5 +82,5 @@ class Comment(CommentsBase):
 
 
 class Token(BaseModel):
-    token: str
-    type: str
+    access_token: str
+    token_type: str

@@ -78,4 +78,4 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: 
             {'sub': username},
             access_token_expires
         )
-        return Token(token=access_token, type='bearer')
+        return Token(access_token=access_token, token_type='bearer')
